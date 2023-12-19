@@ -22,7 +22,7 @@ if ! command -v nvm &> /dev/null; then
             echo "删除目录 $nvm_path"
             rm -rf $nvm_path
         else
-            echo "跳过安装 nvm"
+            echo "您选择忽略删除目录 $nvm_path ，跳过安装 nvm"
             install_nvm=n
         fi
     fi
@@ -35,9 +35,17 @@ if ! command -v nvm &> /dev/null; then
         ~/.nvm/install.sh
     fi
 
+    if [ -d $nvm_path ]; then
+        echo "安装 nvm 成功"
+    else
+        echo "安装 nvm 失败"
+        exit 1
+    fi
+
     # 更新 bashrc
-    if [ -f ~/.bashrc ]; then
-        content_bash=$(cat ~/.bashrc)
+    bashrc_path=~/.bashrc
+    if [ -f $bashrc_path ]; then
+        content_bash=$(cat $bashrc_path)
     else
         content_bash=""
     fi
@@ -46,14 +54,15 @@ if ! command -v nvm &> /dev/null; then
         content_bash+="export NVM_DIR=~/.nvm\n"
         content_bash+="[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"  # This loads nvm\n"
         content_bash+="[ -s \"$NVM_DIR/bash_completion\" ] && \. \"$NVM_DIR/bash_completion\"  # This loads nvm bash_completion\n"
-        echo $content_bash >> ~/.bashrc
+        echo $content_bash >> $bashrc_path
     else
-        echo "bashrc 环境变量已存在，跳过添加"
+        echo "$bashrc_path 环境变量已存在，跳过添加"
     fi
 
     # 更新 zshrc
-    if [ -f ~/.zshrc ]; then
-        content_zsh=$(cat ~/.zshrc)
+    zshrc_path=~/.zshrc
+    if [ -f $zshrc_path ]; then
+        content_zsh=$(cat $zshrc_path)
     else
         content_zsh=""
     fi
@@ -62,9 +71,9 @@ if ! command -v nvm &> /dev/null; then
         content_zsh+="export NVM_DIR=~/.nvm\n"
         content_zsh+="[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"  # This loads nvm\n"
         content_zsh+="[ -s \"$NVM_DIR/bash_completion\" ] && \. \"$NVM_DIR/bash_completion\"  # This loads nvm bash_completion\n"
-        echo $content_zsh >> ~/.zshrc
+        echo $content_zsh >> $zshrc_path
     else
-        echo "zshrc 环境变量已存在，跳过添加"
+        echo "$zshrc_path 环境变量已存在，跳过添加"
     fi
 
     # 刷新环境
