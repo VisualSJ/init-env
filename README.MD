@@ -1,0 +1,17 @@
+# 初始化环境
+
+将常用的一些环境初始化工作脚本化，避免重复的人力开销
+
+## Usage
+
+```bash
+# 克隆项目
+git clone https://github.com/VisualSJ/init-env.git
+
+# 进入项目目录
+cd init-env
+
+# 安装所需要的环境
+./nvm.sh
+...
+```
