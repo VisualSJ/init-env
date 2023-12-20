@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! command -v git &> /dev/null; then
-    echo "git 未安装，请先安装 git 并运行此脚本"
+    echo "git 未安装，请先安装 git 再运行此脚本"
     echo "在 mac 上，打开一个新的命令行，执行一次 git -v 会弹出安装提示，请按提示安装"
     exit 1
 fi
